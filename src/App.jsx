@@ -1,16 +1,6 @@
 import { useState } from 'react';
 import './App.css';
 import SingleCard from './components/SingleCard';
-import axios from 'axios';
-
-const cardImages = [
-  { src: '/public/img/helmet-1.png' },
-  { src: '/public/img/potion-1.png' },
-  { src: '/public/img/ring-1.png' },
-  { src: '/public/img/scroll-1.png' },
-  { src: '/public/img/shield-1.png' },
-  { src: '/public/img/sword-1.png' },
-];
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -18,30 +8,20 @@ function App() {
 
   // shuffle cards
   const shuffleCards = async () => {
-    const choice = getChoice(1025);
-
-    let URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${choice}.png`;
-
     const pokemonImages = getPokemon();
-    console.log('Pokemon Array: ', pokemonImages);
-
-    // const response = await axios.get(URL);
-    // let pokemonImages = response.data.results;
-    // console.log(response);
+    // console.log('Pokemon Array: ', pokemonImages);
 
     const shuffledCards = [...pokemonImages, ...pokemonImages]
       .sort(() => Math.random() - 0.5)
-      // .map(card => ({ ...card, id: Math.floor(Math.random() * 13) }));
       .map(card => ({ ...card }));
 
-    setCards(genRand(shuffledCards));
+    setCards(addId(shuffledCards));
     setTurns(0);
   };
 
-  const genRand = cards => {
+  const addId = cards => {
     const arr = [];
     const size = Object.keys(cards).length;
-    // console.log('Cards1: ', cards);
 
     while (arr.length < size) {
       let id = Math.floor(Math.random() * size) + 1;
