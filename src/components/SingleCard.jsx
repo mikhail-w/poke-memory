@@ -2,6 +2,7 @@ import './SingleCard.css';
 
 function SingleCard({ card, handleChoice }) {
   const handleClick = () => {
+    console.log('Card Clicked!');
     handleChoice(card);
   };
 
