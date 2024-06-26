@@ -31,10 +31,14 @@ function App() {
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       if (choiceOne.src === choiceTwo.src) {
-        console.log(`They match: c1: ${choiceOne.src} c2: ${choiceTwo.src}`);
+        // console.log(`They match: c1: ${choiceOne.src} c2: ${choiceTwo.src}`);
+        // resetTurn();
+        console.log(`They match!`);
         resetTurn();
       } else {
-        console.log(`They DO NOT match: c1: ${choiceOne.src} c2: ${choiceTwo}`);
+        // console.log(`They DO NOT match: c1: ${choiceOne.src} c2: ${choiceTwo}`);
+        // resetTurn();
+        console.log(`They DO NOT match`);
         resetTurn();
       }
     }
@@ -77,6 +81,7 @@ function App() {
     for (let i = 0; i < 6; i++) {
       let id = getRandomId(1015);
       let url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
+      // let url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${id}.gif`;
       res.push({ src: url });
     }
     return res;
