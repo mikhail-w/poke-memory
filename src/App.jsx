@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import SingleCard from './components/SingleCard';
 
 function App() {
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
+  const [choiceOne, setChoiceOne] = useState(null);
+  const [choiceTwo, setChoiceTwo] = useState(null);
 
   // shuffle cards
   const shuffleCards = async () => {
-    const pokemonImages = getPokemon();
+    const pokemonImages = getRandomPokemon();
     // console.log('Pokemon Array: ', pokemonImages);
 
     const shuffledCards = [...pokemonImages, ...pokemonImages]
@@ -17,6 +19,31 @@ function App() {
 
     setCards(addId(shuffledCards));
     setTurns(0);
+  };
+
+  // Handle a choice
+  const handleChoice = card => {
+    // console.log(card);
+
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+  };
+
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      if (choiceOne.src === choiceTwo.src) {
+        console.log(`They match: c1: ${choiceOne.src} c2: ${choiceTwo.src}`);
+        resetTurn();
+      } else {
+        console.log(`They DO NOT match: c1: ${choiceOne.src} c2: ${choiceTwo}`);
+        resetTurn();
+      }
+    }
+  }, [choiceOne, choiceTwo]);
+
+  const resetTurn = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns(prevTurns => prevTurns + 1);
   };
 
   const addId = cards => {
@@ -40,15 +67,15 @@ function App() {
     return newCards;
   };
 
-  function getChoice(max) {
+  function getRandomId(max) {
     return Math.floor(Math.random() * max);
   }
 
-  const getPokemon = () => {
+  const getRandomPokemon = () => {
     const res = [];
 
     for (let i = 0; i < 6; i++) {
-      let id = getChoice(1015);
+      let id = getRandomId(1015);
       let url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
       res.push({ src: url });
     }
@@ -56,15 +83,21 @@ function App() {
   };
 
   // console.log(cards, turns);
+  // console.log('Choice One: ', choiceOne);
+  // console.log('Choice Two: ', choiceTwo);
 
   return (
     <>
       <h1>Poke-Memory</h1>
       <button onClick={shuffleCards}>New Game</button>
-
+      <div>Turns: {turns}</div>
       <div className="card-grid">
         {cards.map(card => (
-          <SingleCard key={card.id} card={card}></SingleCard>
+          <SingleCard
+            key={card.id}
+            card={card}
+            handleChoice={handleChoice}
+          ></SingleCard>
         ))}
       </div>
     </>
