@@ -2,9 +2,25 @@
   position: relative;
 }
 
-.card img {
+/* .front-container {
+  max-width: 224px;
+  max-height: 311px;
+  object-fit: contain;
+  outline: 2px solid green;
+} */
+.front .card img {
   width: 100%;
   display: block;
   border: 2px solid #fff;
   border-radius: 6px;
+}
+
+/* front of card - the picture*/
+.card .front {
+  transform: rotateY(90deg);
+  position: absolute;
+}
+
+.flipped .front {
+  transform: rotate(0deg);
 }
