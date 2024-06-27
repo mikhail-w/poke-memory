@@ -1,9 +1,13 @@
 import './SingleCard.css';
 
-function SingleCard({ card, handleChoice, flipped }) {
+function SingleCard({ card, handleChoice, flipped, disabled }) {
   const handleClick = () => {
-    console.log('Card Clicked!');
-    handleChoice(card);
+    // console.log('Card Clicked!');
+
+    // prevents user from clicking multiple cards too quickly
+    if (!disabled) {
+      handleChoice(card);
+    }
   };
 
   return (
