@@ -11,57 +11,24 @@ function App() {
   // shuffle cards
   const shuffleCards = async () => {
     const pokemonImages = getRandomPokemon();
-    // console.log('Pokemon Array: ', pokemonImages);
 
     // Duplicate the cards
-    let shuffledCards = [...pokemonImages, ...pokemonImages]
+    const shuffledCards = [...pokemonImages, ...pokemonImages]
       .sort(() => Math.random() - 0.5)
-      .map(card => ({ ...card }));
-    // // console.log(shuffledCards);
-
-    //Modified Loop
-    // const shuffledCards = [...pokemonImages, ...pokemonImages]
-    //   .sort(() => Math.random() - 0.5)
-    //   .map((card, idx) => {
-    //     // console.log(card);
-    //     let ans = { ...addId2(card, idx) };
-    //     // console.log('Ans: ', ans);
-    //     return ans;
-    //   });
-
-    shuffledCards = addId(shuffledCards);
+      .map((card, idx) => {
+        let ans = { ...addId(card, idx) };
+        return ans;
+      });
 
     setCards(shuffledCards);
     setTurns(0);
 
-    console.log('SHUFFLED CARDS: ', shuffledCards);
+    // console.log('SHUFFLED CARDS: ', shuffledCards);
   };
 
-  // const addId2 = (card, idx) => {
-  //   return { ...card, id: idx, matched: false };
-  // };
-
-  const addId = cards => {
-    const arr = [];
-    const size = Object.keys(cards).length;
-
-    // Assign id's between 0 - array size to random elements inside the array
-    while (arr.length < size) {
-      let id = Math.floor(Math.random() * size) + 1;
-      if (arr.indexOf(id) === -1) arr.push(id);
-    }
-
-    // console.log('Array: ', arr);
-
-    // Add Index and matched state key/value pairs to array
-    let newCards = cards.reduce((arr, val, idx) => {
-      let newVal = { ...val, id: idx, matched: false };
-      arr.push(newVal);
-      return arr;
-    }, []);
-
-    // console.log('New Cards: ', newCards);
-    return newCards;
+  // Add Id and matched key/value pairs to card object
+  const addId = (card, idx) => {
+    return { ...card, id: idx, matched: false };
   };
 
   // Handle a choice
@@ -74,9 +41,16 @@ function App() {
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       if (choiceOne.src === choiceTwo.src) {
-        // console.log(`They match: c1: ${choiceOne.src} c2: ${choiceTwo.src}`);
-        // resetTurn();
         console.log(`They match!`);
+        setCards(prevCards => {
+          return prevCards.map(card => {
+            if (card.src === choiceOne.src) {
+              return { ...card, matched: true };
+            } else {
+              return card;
+            }
+          });
+        });
         resetTurn();
       } else {
         // console.log(`They DO NOT match: c1: ${choiceOne.src} c2: ${choiceTwo}`);
@@ -86,7 +60,7 @@ function App() {
       }
     }
   }, [choiceOne, choiceTwo]);
-
+  console.log(cards);
   const resetTurn = () => {
     console.log('=== RESET ===');
     setChoiceOne(null);
@@ -125,7 +99,8 @@ function App() {
             key={card.id}
             card={card}
             handleChoice={handleChoice}
-          ></SingleCard>
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+          />
         ))}
       </div>
     </>
