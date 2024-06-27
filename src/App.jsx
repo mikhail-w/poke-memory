@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import SingleCard from './components/SingleCard';
+import Logo from './components/Logo';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -9,7 +10,7 @@ function App() {
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
-  // shuffle cards
+  // Shuffle cards
   const shuffleCards = async () => {
     const pokemonImages = getRandomPokemon();
 
@@ -21,6 +22,7 @@ function App() {
         return ans;
       });
 
+    // Update Game Screen
     setCards(shuffledCards);
     setTurns(0);
 
@@ -35,12 +37,12 @@ function App() {
   // Handle a choice
   const handleChoice = card => {
     // console.log(card);
-
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
   useEffect(() => {
     if (choiceOne && choiceTwo) {
+      //prevents user from clicking multiple cards too quickly
       setDisabled(true);
 
       if (choiceOne.src === choiceTwo.src) {
@@ -93,9 +95,15 @@ function App() {
   // console.log('Choice One: ', choiceOne);
   // console.log('Choice Two: ', choiceTwo);
 
+  // Start the game automatically
+  useEffect(() => {
+    shuffleCards();
+  }, []);
+
   return (
     <>
-      <h1>Poke-Memory</h1>
+      {/* <h1>Poke-Memory</h1> */}
+      <Logo></Logo>
       <button onClick={shuffleCards}>New Game</button>
       <div>Turns: {turns}</div>
       <div className="card-grid">
