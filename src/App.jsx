@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import SingleCard from './components/SingleCard';
 import Logo from './components/Logo';
+import ng from './img/ng.png';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -23,6 +24,8 @@ function App() {
       });
 
     // Update Game Screen
+    setChoiceOne(null);
+    setChoiceTwo(null);
     setCards(shuffledCards);
     setTurns(0);
 
@@ -96,16 +99,19 @@ function App() {
   // console.log('Choice Two: ', choiceTwo);
 
   // Start the game automatically
-  useEffect(() => {
-    shuffleCards();
-  }, []);
+  // useEffect(() => {
+  //   shuffleCards();
+  // }, []);
 
   return (
     <>
       {/* <h1>Poke-Memory</h1> */}
       <Logo></Logo>
-      <button onClick={shuffleCards}>New Game</button>
-      <div>Turns: {turns}</div>
+      {/* <button onClick={shuffleCards}>New Game</button> */}
+      <button onClick={shuffleCards}>
+        <img src={ng} alt="button" />
+      </button>
+      {/* <NewGameBtn onClick={shuffleCards}></NewGameBtn> */}
       <div className="card-grid">
         {cards.map(card => (
           <SingleCard
@@ -117,6 +123,7 @@ function App() {
           />
         ))}
       </div>
+      <div>Turns: {turns}</div>
     </>
   );
 }

@@ -9,3 +9,17 @@ body {
   background: #1b1523;
   color: #fff;
 }
+
+button {
+  border-radius: 50px;
+  border-color: #365fab;
+  background-color: #ffcc01;
+  max-width: 160px;
+  box-sizing: border-box;
+  object-fit: contain;
+  padding: 5;
+}
+
+button img {
+  width: 100%;
+}

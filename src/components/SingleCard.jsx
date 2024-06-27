@@ -1,4 +1,5 @@
 import './SingleCard.css';
+import back from '../img/ball.png';
 
 function SingleCard({ card, handleChoice, flipped, disabled }) {
   const handleClick = () => {
@@ -16,7 +17,7 @@ function SingleCard({ card, handleChoice, flipped, disabled }) {
         <img className="front" src={card.src} alt="card-front" />
         <img
           className="back"
-          src="../public/img/ball.png"
+          src={back}
           onClick={handleClick}
           alt="card-back"
         />
