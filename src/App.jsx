@@ -55,8 +55,8 @@ function App() {
       } else {
         // console.log(`They DO NOT match: c1: ${choiceOne.src} c2: ${choiceTwo}`);
         // resetTurn();
-        console.log(`They DO NOT match`);
-        resetTurn();
+        // console.log(`They DO NOT match`);
+        setTimeout(() => resetTurn(), 1000);
       }
     }
   }, [choiceOne, choiceTwo]);
