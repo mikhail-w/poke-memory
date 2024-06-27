@@ -9,12 +9,15 @@ function SingleCard({ card, handleChoice, flipped }) {
   return (
     <div className="card">
       <div className={flipped ? 'flipped' : ''}>
-        {/* <div className="front-container"> */}
         <img className="front" src={card.src} alt="card-front" />
-        {/* </div> */}
+        {/* <div className="front">
+        <img className="front" src={card.src} alt="card-front" />
+        <h2>Name</h2>
+        </div> */}
         <img
           className="back"
-          src="../public/img/pokemon-card-back.png"
+          // src="../public/img/pokemon-card-back.png"
+          src="../public/img/ball.png"
           onClick={handleClick}
           alt="card-back"
         />
