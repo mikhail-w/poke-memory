@@ -3,6 +3,8 @@ import './App.css';
 import SingleCard from './components/SingleCard';
 import Logo from './components/Logo';
 import ng from './img/ng.png';
+import background from './img/bg2.jpg';
+import turnImg from './img/turns.png';
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -105,25 +107,32 @@ function App() {
 
   return (
     <>
-      {/* <h1>Poke-Memory</h1> */}
-      <Logo></Logo>
-      {/* <button onClick={shuffleCards}>New Game</button> */}
-      <button onClick={shuffleCards}>
-        <img src={ng} alt="button" />
-      </button>
-      {/* <NewGameBtn onClick={shuffleCards}></NewGameBtn> */}
-      <div className="card-grid">
-        {cards.map(card => (
-          <SingleCard
-            key={card.id}
-            card={card}
-            handleChoice={handleChoice}
-            flipped={card === choiceOne || card === choiceTwo || card.matched}
-            disabled={disabled}
-          />
-        ))}
+      <div
+        className="background"
+        style={{ backgroundImage: `url(${background})` }}
+      >
+        {/* <h1>Poke-Memory</h1> */}
+        <Logo></Logo>
+        {/* <button onClick={shuffleCards}>New Game</button> */}
+        <button onClick={shuffleCards}>
+          <img src={ng} alt="button" />
+        </button>
+        {/* <NewGameBtn onClick={shuffleCards}></NewGameBtn> */}
+        <div className="card-grid">
+          {cards.map(card => (
+            <SingleCard
+              key={card.id}
+              card={card}
+              handleChoice={handleChoice}
+              flipped={card === choiceOne || card === choiceTwo || card.matched}
+              disabled={disabled}
+            />
+          ))}
+        </div>
+        <div>
+          <img className="turns" src={turnImg} alt="button" /> {turns}
+        </div>
       </div>
-      <div>Turns: {turns}</div>
     </>
   );
 }
